@@ -1,4 +1,5 @@
 #include <iostream>
+
 #include <string>
 
 using namespace std;
@@ -15,23 +16,8 @@ int main() {
     //Declare an array
     Student A[5];
 
-    for (int i = 0; i < 5; i++)
-        {
-        cout<<"Student"<<i+1<<endl;
-        cout<<"-----------------------------"<<endl;
-        cout << "Please Enter ID: ";
-        cin >> A[i].id;
-        cout << "Please Enter Name: ";
-        cin >> A[i].name;
-        cout << "Please Enter Age: ";
-        cin >> A[i].age;
-        cout << "Please Enter Course: ";
-        cin >> A[i].course;
-        cout << "----------------------------------------------------------------------------------------"<<endl;
-    }
-
     //Save records of 5 students
-/*
+
     A[0].id = 24001;
     A[0].name = "Adam";
     A[0].age = 18;
@@ -61,7 +47,7 @@ int main() {
     A[4].age = 18;
     A[4].course = "CS";
 
-*/
+
     //Display all records of 5 students
     for(int i = 0; i < 5; i++){
         cout<<"Student #"<<i+1<<" details:"<<endl;
@@ -90,5 +76,25 @@ int main() {
     }
 
 
+    //Update one student record
+    int option;
+    cout<<"Choose which student record to update(1-5) :";
+    cin>>option;
+    cout<<endl;
 
+    cout<<"Please enter the #"<<option<<" student's new id :";
+    cin>>A[option - 1].id;
+    cout<<"Please enter the #"<<option<<" student's new name :";
+    cin>>A[option - 1].name;
+    cout<<"Please enter the #"<<option<<" student's new age :";
+    cin>>A[option - 1].age;
+    cout<<"Please enter the #"<<option<<" student's new course :";
+    cin>>A[option - 1].course;
+    cout<<endl;
+
+    cout<<"Student #"<<option<<" new details:"<<endl;
+    cout<<"Id :"<<A[option - 1].id<<endl;
+    cout<<"Name :"<<A[option - 1].name<<endl;
+    cout<<"Age :"<<A[option - 1].age<<endl;
+    cout<<"Course :"<<A[option - 1].course<<endl;
 }
