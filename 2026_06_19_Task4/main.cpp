@@ -1,4 +1,5 @@
 #include <iostream>
+#include <math.h>
 #include <string>
 
 using namespace std;
@@ -11,7 +12,7 @@ struct Node {
 Node* head = nullptr;
 // DOUBLE LINK LIST-----------------------------------------------------------------------------------------------
 // Insert  First--------------------------------------------------------------------------------------------------
-void insertFirst(string value) {
+void insertFirstC(string value) {
 
     Node* newNode = new Node();
     newNode->name = value;
@@ -35,7 +36,7 @@ void insertFirst(string value) {
 }
 
 //Insert Last----------------------------------------------------------------------------------------------------------
-void insertLast(string value) {
+void insertLastC(string value) {
 
     Node* newNode = new Node();
     newNode->name = value;
@@ -56,10 +57,10 @@ void insertLast(string value) {
     newNode->next = head;
 }
 //Insert Nth-Position---------------------------------------------------------------------------------------------------
-void insertNth(string value, int pos) {
+void insertNthC(string value, int pos) {
 
     if (pos == 1) {
-        insertFirst(value);
+        insertFirstC(value);
         return;
     }
 
@@ -76,7 +77,7 @@ void insertNth(string value, int pos) {
     temp->next = newNode;
 }
 //Delete First---------------------------------------------------------------------------------------------------------
-void deleteFirst() {
+void deleteFirstC() {
 
     if (head == nullptr) {
         cout << "List is empty";
@@ -102,7 +103,7 @@ void deleteFirst() {
     delete temp;
 }
 //Delete Last-----------------------------------------------------------------------------------------------------------
-void deleteLast() {
+void deleteLastC() {
 
     if (head == nullptr) {
         cout << "List is empty";
@@ -126,7 +127,7 @@ void deleteLast() {
     delete temp;
 }
 //Delete Nth-Position---------------------------------------------------------------------------------------------------
-void deleteNth(int pos) {
+void deleteNthC(int pos) {
 
     if (head == nullptr) {
         cout << "List is empty";
@@ -134,7 +135,7 @@ void deleteNth(int pos) {
     }
 
     if (pos == 1) {
-        deleteFirst();
+        deleteFirstC();
         return;
     }
 
@@ -155,10 +156,10 @@ void deleteNth(int pos) {
     delete temp;
 }
 //display-Circular------------------------------------------------------------------------------------------------------
-void display() {
+void displayC() {
 
     if (head == nullptr) {
-        cout << "List is empty\n";
+        cout << "List is empty";
         return;
     }
 
@@ -169,40 +170,251 @@ void display() {
         current = current->next;
     } while (current != head);
 
-    cout << "(back to head)\n";
+    cout << "(back to head)";
 }
 
+//DOUBLE LINKED LIST---------------------------------------------------------------------------------------------------
+struct node {
+    string name;
+    node* prev;
+    node* next;
+};
 
+node* Head = nullptr;
+
+//Insert First---------------------------------------------------------------------------------------------------------
+void insertFirstD(string value) {
+
+    node* newNode = new node();
+
+    newNode->name = value;
+    newNode->prev = nullptr;
+    newNode->next = Head;
+
+    if (Head != nullptr) {
+        Head->prev = newNode;
+    }
+
+    Head = newNode;
+}
+//Insert Last----------------------------------------------------------------------------------------------------------
+void insertLastD(string value) {
+
+    node* newNode = new node();
+
+    newNode->name = value;
+    newNode->next = nullptr;
+
+    // Empty list
+    if (Head == nullptr) {
+        newNode->prev = nullptr;
+        Head = newNode;
+        return;
+    }
+
+    node* current = Head;
+
+    while (current->next != nullptr) {
+        current = current->next;
+    }
+
+    current->next = newNode;
+    newNode->prev = current;
+}
+
+//Insert Nth-Position---------------------------------------------------------------------------------------------------
+void insertNthD(string value, int position) {
+
+    if (position == 1) {
+        insertFirstD(value);
+        return;
+    }
+
+    node* newNode = new node();
+    newNode->name = value;
+
+    node* current = Head;
+
+    for (int i = 1; i < position - 1 && current != nullptr; i++) {
+        current = current->next;
+    }
+
+    if (current == nullptr) {
+        cout << "Invalid Position";
+        delete newNode;
+        return;
+    }
+
+    newNode->next = current->next;
+    newNode->prev = current;
+
+    if (current->next != nullptr) {
+        current->next->prev = newNode;
+    }
+
+    current->next = newNode;
+}
+
+//Delete First---------------------------------------------------------------------------------------------------------
+void deleteFirstD() {
+
+    if (Head == nullptr) {
+        cout << "List is empty";
+        return;
+    }
+
+    node* temp = Head;
+
+    Head = Head->next;
+
+    if (Head != nullptr) {
+        Head->prev = nullptr;
+    }
+
+    delete temp;
+}
+//Delete Last-----------------------------------------------------------------------------------------------------------
+void deleteLastD() {
+
+    if (Head == nullptr) {
+        cout << "List is emptyn";
+        return;
+    }
+
+    // Only one node
+    if (Head->next == nullptr) {
+        delete Head;
+        Head = nullptr;
+        return;
+    }
+
+    node* current = Head;
+
+    while (current->next != nullptr) {
+        current = current->next;
+    }
+
+    current->prev->next = nullptr;
+
+    delete current;
+}
+
+//Delete Nth-Position--------------------------------------------------------------------------------------------------
+void deleteNthD(int position) {
+
+    if (Head == nullptr) {
+        cout << "List is empty";
+        return;
+    }
+
+    if (position == 1) {
+        deleteFirstD();
+        return;
+    }
+
+    node* current = Head;
+
+    for (int i = 1; i < position && current != nullptr; i++) {
+        current = current->next;
+    }
+
+    if (current == nullptr) {
+        cout << "Invalid Position";
+        return;
+    }
+
+    current->prev->next = current->next;
+
+    if (current->next != nullptr) {
+        current->next->prev = current->prev;
+    }
+
+    delete current;
+}
+
+//Display Double--------------------------------------------------------------------------------------------------------
+void displayD() {
+
+    if (Head == nullptr) {
+        cout << "List is empty";
+        return;
+    }
+
+    node* current = Head;
+
+    while (current != nullptr) {
+        cout << current->name << " <-> ";
+        current = current->next;
+    }
+
+    cout << "NULL";
+    cout << endl;
+}
+//Main Function=========================================================================================================
 int main() {
 
-    insertLast("Aimar");
-    insertLast("Ahmad");
-    insertLast("Anjana");
-    insertLast("Jessy");
+    cout << "CIRCULAR LINKED LIST"<<endl;
+
+    insertLastC("Aimar");
+    insertLastC("Ahmad");
+    insertLastC("Anjana");
+    insertLastC("Jessy");
 
     cout << "Initial list:";
-    display();
+    displayC();
 
-    insertFirst("Adam");
+    insertFirstC("Adam");
     cout << "After insertFirst:";
-    display();
+    displayC();
 
-    insertNth("John", 3);
+    insertNthC("John", 3);
     cout << "After insertNth(3):";
-    display();
+    displayC();
 
-    deleteFirst();
+    deleteFirstC();
     cout << "After deleteFirst:";
-    display();
+    displayC();
 
-    deleteLast();
+    deleteLastC();
     cout << "After deleteLast:";
-    display();
+    displayC();
 
-    deleteNth(2);
+    deleteNthC(2);
     cout << "After deleteNth(2):";
-    display();
+    displayC();
 
+    cout<<endl;
+    cout<<"================================================================================================="<<endl;
+
+    cout<<"DOUBLE LNKED LIST"<<endl;
+
+    insertLastD("Aimar");
+    insertLastD("Ahmad");
+    insertLastD("Anjana");
+    insertLastD("Jessy");
+
+    cout << "Original List:";
+    displayD();
+
+    insertFirstD("Adam");
+    cout << "After insertFirst:";
+    displayD();
+
+    insertNthD("John", 3);
+    cout << "After insertNth(3):";
+    displayD();
+
+    deleteFirstD();
+    cout << "After deleteFirst:";
+    displayD();
+
+    deleteLastD();
+    cout << "After deleteLast:";
+    displayD();
+
+    deleteNthD(2);
+    cout << "After deleteNth(2):";
+    displayD();
     return 0;
 }
 /*
